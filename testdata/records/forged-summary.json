@@ -1,0 +1,83 @@
+{
+  "$schema": "runback.audit/v2",
+  "manifest": {
+    "run_id": "rt-1",
+    "generated_at": "2026-01-01T00:00:00.000Z",
+    "content_digest": "6b0fbc08354bf6c5be5cd0d52fdd9ebe4c44d6014d8bb1e8db0eccc2aa1751ae",
+    "replay": {
+      "cassette_digest": "1d16b2c5ba5495d17140bf2be4225f93cf4f397cb6ba4ab4db3d2e03c3bb00ca"
+    },
+    "signature": {
+      "alg": "Ed25519",
+      "value": "71ccff6a48149077d67056b1eb98c8ff533fa86dbafd1dc710efc3290c35c141e88433e217a4fae16ede2d2f896f89ef11b831204990b06fe2cae0b0e57fa505",
+      "pubkey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAG9fzJ48RUNwZpgkmHWUhVbxeHQ8FjcLMR0mUHyKs19s=\n-----END PUBLIC KEY-----\n"
+    }
+  },
+  "run": {
+    "status": "completed",
+    "error": null,
+    "output": null
+  },
+  "events": [
+    {
+      "schema_version": 1,
+      "run_id": "rt-1",
+      "span_id": "r",
+      "seq": 0,
+      "type": "run",
+      "phase": "start",
+      "name": "roundtrip",
+      "_hash": "535c30b4eafa0da6f8d89e31a40f9740067a6e1460b09f24d5849403d1fc78e1"
+    },
+    {
+      "schema_version": 1,
+      "run_id": "rt-1",
+      "span_id": "t1",
+      "seq": 1,
+      "type": "tool",
+      "tool_name": "echo",
+      "input": {
+        "q": "a<b>&c"
+      },
+      "output": {
+        "ok": true,
+        "n": 1e-7
+      },
+      "_hash": "9b59cdbc602c91e7f8e7f1224acb95fb6c3a8c1d3858e4560ee15c9a278106ca"
+    },
+    {
+      "schema_version": 1,
+      "run_id": "rt-1",
+      "span_id": "l1",
+      "seq": 2,
+      "type": "llm",
+      "model": {
+        "model_id": "m-1"
+      },
+      "request": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "hi 🎉"
+          }
+        ]
+      },
+      "response": {
+        "text": "ok"
+      },
+      "_hash": "6af74f0e2eb2637768cbe368775b4ff322951e5a0956e432c3d380191cb2c7b4"
+    },
+    {
+      "schema_version": 1,
+      "run_id": "rt-1",
+      "span_id": "r",
+      "seq": 3,
+      "type": "run",
+      "phase": "end",
+      "status": "error",
+      "error": "boom",
+      "output": null,
+      "_hash": "6b0fbc08354bf6c5be5cd0d52fdd9ebe4c44d6014d8bb1e8db0eccc2aa1751ae"
+    }
+  ]
+}

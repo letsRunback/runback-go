@@ -1,0 +1,218 @@
+{
+  "_comment": [
+    "Cross-language canonicalisation fixture for runback.cassette/v1.",
+    "",
+    "`canonical` is what packages/verify/index.js produces — the reference",
+    "implementation — and every other implementation MUST produce it byte for",
+    "byte. Regenerate with: node packages/verify/testdata/generate.mjs",
+    "",
+    "This exists because three implementations had already drifted without",
+    "anything noticing: each was tested, and each passed, because each was",
+    "tested against itself. Divergences measured when it was written:",
+    "",
+    "  Python  1e-7  -> \"1e-07\"     exponent padded to two digits",
+    "  Python  1e16  -> \"1e+16\"     sci notation from 1e16 instead of 1e21",
+    "  Python  non-BMP keys ordered by code point, not UTF-16 code unit",
+    "  Go      < > & -> \\u003c ...  encoding/json's HTML-escaping default",
+    "  Go      U+2028/9 escaped even under SetEscapeHTML(false)",
+    "  Go      non-BMP keys ordered by UTF-8 byte, not UTF-16 code unit",
+    "",
+    "Each produces a different digest for the same record — one implementation",
+    "calling TAMPERED what another calls VALID. For a format whose whole claim",
+    "is 'verify this without us', that is the product failing, not a helper.",
+    "",
+    "The vectors are deliberately nasty. Ordinary data agreed all along, which",
+    "is exactly why the drift survived."
+  ],
+  "vectors": [
+    {
+      "name": "html-sensitive characters are NOT escaped",
+      "value": {
+        "a": "<b>&</b>"
+      },
+      "canonical": "{\"a\":\"<b>&</b>\"}"
+    },
+    {
+      "name": "U+2028 and U+2029 stay raw",
+      "value": {
+        "a": "x y z"
+      },
+      "canonical": "{\"a\":\"x y z\"}"
+    },
+    {
+      "name": "small exponent is not zero-padded",
+      "value": {
+        "a": 1e-7
+      },
+      "canonical": "{\"a\":1e-7}"
+    },
+    {
+      "name": "scientific notation starts at 1e21, not 1e16",
+      "value": {
+        "a": 10000000000000000
+      },
+      "canonical": "{\"a\":10000000000000000}"
+    },
+    {
+      "name": "1e21 is the first exponential",
+      "value": {
+        "a": 1e+21
+      },
+      "canonical": "{\"a\":1e+21}"
+    },
+    {
+      "name": "1e-6 is still positional",
+      "value": {
+        "a": 0.000001
+      },
+      "canonical": "{\"a\":0.000001}"
+    },
+    {
+      "name": "negative zero prints as zero",
+      "value": {
+        "a": 0
+      },
+      "canonical": "{\"a\":0}"
+    },
+    {
+      "name": "non-BMP keys sort by UTF-16 code unit",
+      "value": {
+        "😀": 1,
+        "�": 2
+      },
+      "canonical": "{\"😀\":1,\"�\":2}"
+    },
+    {
+      "name": "integer-like keys sort as strings",
+      "value": {
+        "2": "b",
+        "10": "a",
+        "x": "c"
+      },
+      "canonical": "{\"10\":\"a\",\"2\":\"b\",\"x\":\"c\"}"
+    },
+    {
+      "name": "quote and backslash",
+      "value": {
+        "a": "\"\\"
+      },
+      "canonical": "{\"a\":\"\\\"\\\\\"}"
+    },
+    {
+      "name": "control characters: short forms, then \\u00XX",
+      "value": {
+        "a": "\u0001\b\t\n\f\r\u001f"
+      },
+      "canonical": "{\"a\":\"\\u0001\\b\\t\\n\\f\\r\\u001f\"}"
+    },
+    {
+      "name": "whole floats lose the decimal point",
+      "value": {
+        "a": 1,
+        "b": 100
+      },
+      "canonical": "{\"a\":1,\"b\":100}"
+    },
+    {
+      "name": "large magnitude",
+      "value": {
+        "a": 1.5e+300
+      },
+      "canonical": "{\"a\":1.5e+300}"
+    },
+    {
+      "name": "fractional round-trip",
+      "value": {
+        "a": 0.1,
+        "b": 2.5,
+        "c": 1.2345678901234567
+      },
+      "canonical": "{\"a\":0.1,\"b\":2.5,\"c\":1.2345678901234567}"
+    },
+    {
+      "name": "nested objects sort at every level",
+      "value": {
+        "b": [
+          1,
+          {
+            "z": null,
+            "a": true
+          }
+        ],
+        "a": "x"
+      },
+      "canonical": "{\"a\":\"x\",\"b\":[1,{\"a\":true,\"z\":null}]}"
+    },
+    {
+      "name": "empty containers",
+      "value": {
+        "a": {},
+        "b": []
+      },
+      "canonical": "{\"a\":{},\"b\":[]}"
+    },
+    {
+      "name": "non-ascii values stay raw",
+      "value": {
+        "a": "café → 日本 🎉"
+      },
+      "canonical": "{\"a\":\"café → 日本 🎉\"}"
+    },
+    {
+      "name": "booleans and null",
+      "value": {
+        "t": true,
+        "f": false,
+        "n": null
+      },
+      "canonical": "{\"f\":false,\"n\":null,\"t\":true}"
+    },
+    {
+      "name": "top-level array",
+      "value": [
+        3,
+        "a",
+        null,
+        true
+      ],
+      "canonical": "[3,\"a\",null,true]"
+    },
+    {
+      "name": "key ordering is by code unit, not locale",
+      "value": {
+        "Z": 1,
+        "a": 2,
+        "B": 3
+      },
+      "canonical": "{\"B\":3,\"Z\":1,\"a\":2}"
+    },
+    {
+      "name": "surrogate pair inside a value",
+      "value": {
+        "a": "💩"
+      },
+      "canonical": "{\"a\":\"💩\"}"
+    },
+    {
+      "name": "deeply nested",
+      "value": {
+        "a": {
+          "b": {
+            "c": {
+              "d": [
+                1,
+                [
+                  2,
+                  [
+                    3
+                  ]
+                ]
+              ]
+            }
+          }
+        }
+      },
+      "canonical": "{\"a\":{\"b\":{\"c\":{\"d\":[1,[2,[3]]]}}}}"
+    }
+  ]
+}
