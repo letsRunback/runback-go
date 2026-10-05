@@ -1,0 +1,192 @@
+{
+  "_comment": [
+    "Verdicts produced by packages/verify/index.js, the reference implementation.",
+    "Every port must reproduce these exactly for the sibling *.json records.",
+    "Regenerate: node packages/verify/testdata/gen-records.mjs"
+  ],
+  "cases": {
+    "signed-genuine": {
+      "opts": {
+        "expectedPublicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAG9fzJ48RUNwZpgkmHWUhVbxeHQ8FjcLMR0mUHyKs19s=\n-----END PUBLIC KEY-----\n"
+      },
+      "verdict": "valid",
+      "valid": true,
+      "integrity": true,
+      "checks": {
+        "schema": true,
+        "chain": true,
+        "digest": true,
+        "cassette": true,
+        "consistent": true,
+        "signature": "valid",
+        "signature_alg": "Ed25519"
+      },
+      "consistency_failures": []
+    },
+    "signed-unpinned": {
+      "opts": {
+        "expectedPublicKey": null
+      },
+      "verdict": "unverified",
+      "valid": false,
+      "integrity": true,
+      "checks": {
+        "schema": true,
+        "chain": true,
+        "digest": true,
+        "cassette": true,
+        "consistent": true,
+        "signature": "valid-unpinned",
+        "signature_alg": "Ed25519"
+      },
+      "consistency_failures": []
+    },
+    "unsigned": {
+      "opts": {
+        "expectedPublicKey": null
+      },
+      "verdict": "unverified",
+      "valid": false,
+      "integrity": true,
+      "checks": {
+        "schema": true,
+        "chain": true,
+        "digest": true,
+        "cassette": true,
+        "consistent": true,
+        "signature": "unsigned",
+        "signature_alg": null
+      },
+      "consistency_failures": []
+    },
+    "tampered-event": {
+      "opts": {
+        "expectedPublicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAG9fzJ48RUNwZpgkmHWUhVbxeHQ8FjcLMR0mUHyKs19s=\n-----END PUBLIC KEY-----\n"
+      },
+      "verdict": "invalid",
+      "valid": false,
+      "integrity": false,
+      "checks": {
+        "schema": true,
+        "chain": false,
+        "digest": false,
+        "cassette": false,
+        "consistent": true,
+        "signature": "valid",
+        "signature_alg": "Ed25519"
+      },
+      "consistency_failures": []
+    },
+    "tampered-digest": {
+      "opts": {
+        "expectedPublicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAG9fzJ48RUNwZpgkmHWUhVbxeHQ8FjcLMR0mUHyKs19s=\n-----END PUBLIC KEY-----\n"
+      },
+      "verdict": "invalid",
+      "valid": false,
+      "integrity": false,
+      "checks": {
+        "schema": true,
+        "chain": true,
+        "digest": false,
+        "cassette": true,
+        "consistent": true,
+        "signature": "invalid",
+        "signature_alg": "Ed25519"
+      },
+      "consistency_failures": []
+    },
+    "tampered-cassette": {
+      "opts": {
+        "expectedPublicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAG9fzJ48RUNwZpgkmHWUhVbxeHQ8FjcLMR0mUHyKs19s=\n-----END PUBLIC KEY-----\n"
+      },
+      "verdict": "invalid",
+      "valid": false,
+      "integrity": false,
+      "checks": {
+        "schema": true,
+        "chain": true,
+        "digest": true,
+        "cassette": false,
+        "consistent": true,
+        "signature": "invalid",
+        "signature_alg": "Ed25519"
+      },
+      "consistency_failures": []
+    },
+    "forged-summary": {
+      "opts": {
+        "expectedPublicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAG9fzJ48RUNwZpgkmHWUhVbxeHQ8FjcLMR0mUHyKs19s=\n-----END PUBLIC KEY-----\n"
+      },
+      "verdict": "invalid",
+      "valid": false,
+      "integrity": false,
+      "checks": {
+        "schema": true,
+        "chain": true,
+        "digest": true,
+        "cassette": true,
+        "consistent": false,
+        "signature": "valid",
+        "signature_alg": "Ed25519"
+      },
+      "consistency_failures": [
+        "run.status (completed) contradicts the sealed run-end event (error)",
+        "run.error does not match the sealed run-end event"
+      ]
+    },
+    "signed-wrong-pin": {
+      "opts": {
+        "expectedPublicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAGb9ECWmEzf6FQbrBZ9w7lshQhqowtrbLDFw4rXAxZuE=\n-----END PUBLIC KEY-----\n"
+      },
+      "verdict": "unverified",
+      "valid": false,
+      "integrity": true,
+      "checks": {
+        "schema": true,
+        "chain": true,
+        "digest": true,
+        "cassette": true,
+        "consistent": true,
+        "signature": "valid-unpinned",
+        "signature_alg": "Ed25519"
+      },
+      "consistency_failures": []
+    },
+    "unknown-schema": {
+      "opts": {
+        "expectedPublicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAG9fzJ48RUNwZpgkmHWUhVbxeHQ8FjcLMR0mUHyKs19s=\n-----END PUBLIC KEY-----\n"
+      },
+      "verdict": "invalid",
+      "valid": false,
+      "integrity": false,
+      "checks": {
+        "schema": false,
+        "chain": true,
+        "digest": true,
+        "cassette": true,
+        "consistent": true,
+        "signature": "valid",
+        "signature_alg": "Ed25519"
+      },
+      "consistency_failures": []
+    },
+    "bad-signature": {
+      "opts": {
+        "expectedPublicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAG9fzJ48RUNwZpgkmHWUhVbxeHQ8FjcLMR0mUHyKs19s=\n-----END PUBLIC KEY-----\n"
+      },
+      "verdict": "invalid",
+      "valid": false,
+      "integrity": true,
+      "checks": {
+        "schema": true,
+        "chain": true,
+        "digest": true,
+        "cassette": true,
+        "consistent": true,
+        "signature": "invalid",
+        "signature_alg": "Ed25519"
+      },
+      "consistency_failures": []
+    }
+  }
+}

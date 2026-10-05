@@ -1,0 +1,859 @@
+{
+  "$ref": "#/definitions/IngestPayload",
+  "definitions": {
+    "IngestPayload": {
+      "type": "object",
+      "properties": {
+        "events": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "schema_version": {
+                    "type": "number",
+                    "const": 1
+                  },
+                  "run_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "span_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "parent_span_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "seq": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "ts_start": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "ts_end": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "actor": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "user",
+                          "api_key",
+                          "system"
+                        ]
+                      },
+                      "id": {
+                        "type": "string"
+                      },
+                      "label": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "id"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "llm"
+                  },
+                  "model": {
+                    "type": "object",
+                    "properties": {
+                      "provider": {
+                        "type": "string"
+                      },
+                      "model_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "provider",
+                      "model_id"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "request": {
+                    "type": "object",
+                    "properties": {
+                      "system": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "messages": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "role": {
+                              "type": "string",
+                              "enum": [
+                                "system",
+                                "user",
+                                "assistant",
+                                "tool"
+                              ]
+                            },
+                            "content": {}
+                          },
+                          "required": [
+                            "role"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "tools": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "parameters": {}
+                          },
+                          "required": [
+                            "name"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "params": {
+                        "type": "object",
+                        "properties": {
+                          "temperature": {
+                            "type": "number"
+                          },
+                          "max_output_tokens": {
+                            "type": "number"
+                          },
+                          "top_p": {
+                            "type": "number"
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "required": [
+                      "system",
+                      "messages",
+                      "tools",
+                      "params"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "response": {
+                    "type": "object",
+                    "properties": {
+                      "text": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "reasoning": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "finish_reason": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "tool_calls": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "tool_call_id": {
+                              "type": "string"
+                            },
+                            "tool_name": {
+                              "type": "string"
+                            },
+                            "input": {}
+                          },
+                          "required": [
+                            "tool_call_id",
+                            "tool_name"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": [
+                      "text",
+                      "reasoning",
+                      "finish_reason",
+                      "tool_calls"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "usage": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "input_tokens": {
+                            "type": "number"
+                          },
+                          "output_tokens": {
+                            "type": "number"
+                          },
+                          "total_tokens": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "input_tokens",
+                          "output_tokens",
+                          "total_tokens"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "latency_ms": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "error": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          },
+                          "stack": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "message"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "key_projection": {
+                    "type": "object",
+                    "properties": {
+                      "keep": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "drop": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "additionalProperties": {}
+                  }
+                },
+                "required": [
+                  "schema_version",
+                  "run_id",
+                  "span_id",
+                  "parent_span_id",
+                  "seq",
+                  "ts_start",
+                  "ts_end",
+                  "type",
+                  "model",
+                  "request",
+                  "response",
+                  "usage",
+                  "latency_ms",
+                  "error"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "schema_version": {
+                    "type": "number",
+                    "const": 1
+                  },
+                  "run_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "span_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "parent_span_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "seq": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "ts_start": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "ts_end": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "actor": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "user",
+                          "api_key",
+                          "system"
+                        ]
+                      },
+                      "id": {
+                        "type": "string"
+                      },
+                      "label": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "id"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "tool"
+                  },
+                  "tool_name": {
+                    "type": "string"
+                  },
+                  "tool_call_id": {
+                    "type": "string"
+                  },
+                  "input": {},
+                  "output": {
+                    "anyOf": [
+                      {},
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "latency_ms": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "error": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          },
+                          "stack": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "message"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "key_projection": {
+                    "type": "object",
+                    "properties": {
+                      "keep": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "drop": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "policy_block": {
+                    "type": "object",
+                    "properties": {
+                      "rule": {
+                        "type": "string"
+                      },
+                      "detail": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "rule",
+                      "detail"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "policy_evaluated": {
+                    "type": "object",
+                    "properties": {
+                      "passed": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "passed"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "additionalProperties": {}
+                  }
+                },
+                "required": [
+                  "schema_version",
+                  "run_id",
+                  "span_id",
+                  "parent_span_id",
+                  "seq",
+                  "ts_start",
+                  "ts_end",
+                  "type",
+                  "tool_name",
+                  "tool_call_id",
+                  "latency_ms",
+                  "error"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "schema_version": {
+                    "type": "number",
+                    "const": 1
+                  },
+                  "run_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "span_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "parent_span_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "seq": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "ts_start": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "ts_end": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "actor": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "user",
+                          "api_key",
+                          "system"
+                        ]
+                      },
+                      "id": {
+                        "type": "string"
+                      },
+                      "label": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "id"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "reasoning"
+                  },
+                  "text": {
+                    "type": "string"
+                  },
+                  "label": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "graph_node": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "step": {
+                        "type": "number"
+                      },
+                      "graph_name": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "routed_from": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "schema_version",
+                  "run_id",
+                  "span_id",
+                  "parent_span_id",
+                  "seq",
+                  "ts_start",
+                  "ts_end",
+                  "type",
+                  "text",
+                  "label"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "schema_version": {
+                    "type": "number",
+                    "const": 1
+                  },
+                  "run_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "span_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "parent_span_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "seq": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "ts_start": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "ts_end": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "actor": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "user",
+                          "api_key",
+                          "system"
+                        ]
+                      },
+                      "id": {
+                        "type": "string"
+                      },
+                      "label": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "id"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "run"
+                  },
+                  "phase": {
+                    "type": "string",
+                    "enum": [
+                      "start",
+                      "end"
+                    ]
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "input": {
+                    "anyOf": [
+                      {},
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "output": {
+                    "anyOf": [
+                      {},
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "status": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "enum": [
+                          "running",
+                          "success",
+                          "error"
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "error": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          },
+                          "stack": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "message"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "additionalProperties": {}
+                  }
+                },
+                "required": [
+                  "schema_version",
+                  "run_id",
+                  "span_id",
+                  "parent_span_id",
+                  "seq",
+                  "ts_start",
+                  "ts_end",
+                  "type",
+                  "phase",
+                  "name",
+                  "status",
+                  "error",
+                  "metadata"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "schema_version": {
+                    "type": "number",
+                    "const": 1
+                  },
+                  "run_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "span_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "parent_span_id": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "seq": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "ts_start": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "ts_end": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "actor": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "user",
+                          "api_key",
+                          "system"
+                        ]
+                      },
+                      "id": {
+                        "type": "string"
+                      },
+                      "label": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "id"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "env"
+                  },
+                  "kind": {
+                    "type": "string",
+                    "enum": [
+                      "now",
+                      "date",
+                      "random",
+                      "uuid",
+                      "fetch"
+                    ]
+                  },
+                  "key": {
+                    "type": "string"
+                  },
+                  "output": {}
+                },
+                "required": [
+                  "schema_version",
+                  "run_id",
+                  "span_id",
+                  "parent_span_id",
+                  "seq",
+                  "ts_start",
+                  "ts_end",
+                  "type",
+                  "kind",
+                  "key"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "minItems": 1,
+          "maxItems": 500
+        }
+      },
+      "required": [
+        "events"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

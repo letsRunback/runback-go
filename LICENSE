@@ -1,0 +1,179 @@
+Runback Community License
+Version 2.0, effective on publication of the Community source repository
+Copyright © 2026 Runback Pty Ltd. All rights reserved.
+
+This is NOT an open-source licence. It does not meet the Open Source Definition,
+because Section 4 restricts the field of use. Do not describe Runback as "open
+source". "Source-available" is accurate.
+
+The Enterprise Features are licensed separately under the Runback Commercial
+Licence (LICENSE-ENTERPRISE). Some of their source is present in this
+repository and some is not — LICENSING.md is the authoritative map. Presence of
+source is not a licence to run it: Enterprise Features require a valid licence
+token regardless of whether you can read the code.
+
+1. DEFINITIONS
+
+   "Licensor" means Runback Pty Ltd, an Australian company based in Melbourne,
+   Victoria, and the owner of the Software.
+
+   "Software" means the source code, object code, and accompanying files made
+   available under this licence, and any modification of them.
+
+   "Community Edition" means the Software as distributed under this licence. It
+   excludes the Enterprise Features.
+
+   "Enterprise Features" has the meaning given in LICENSE-ENTERPRISE. No right
+   to them is granted here, by implication or otherwise.
+
+   "You" means the individual or entity exercising rights under this licence.
+
+   "Your Own Use" means use for your own internal business or personal purposes,
+   including by your employees and contractors acting on your behalf. It includes
+   operating the Software to record, replay, or govern agents that serve your own
+   end users, where what you offer those end users is your own product or service.
+   It does not include making the Software's own functionality available to third
+   parties as the thing they are obtaining from you (see Section 4).
+
+2. COPYRIGHT LICENCE
+
+   Subject to Sections 4 and 5, the Licensor grants you a worldwide,
+   royalty-free, non-exclusive, non-transferable, non-sublicensable licence to:
+
+   (a) use, run, and self-host the Software for Your Own Use, at no charge and
+       without a licence key;
+   (b) read, study, and copy the source code;
+   (c) modify the Software and run your modified version for Your Own Use; and
+   (d) reproduce and distribute the Software, with or without modification,
+       provided you comply with Section 3.
+
+3. CONDITIONS ON DISTRIBUTION
+
+   If you distribute the Software you must:
+
+   (a) include a complete, unmodified copy of this licence;
+   (b) retain all copyright, trademark, patent, and attribution notices;
+   (c) state prominently that the Software is licensed under the Runback
+       Community Licence and is not open source; and
+   (d) if you modified it, carry prominent notices stating that you changed the
+       files and the date of change, and not present the result as the
+       Licensor's unmodified work.
+
+   Recipients receive their rights directly from the Licensor under this licence.
+   You may not impose additional or different terms on the Software itself, and
+   you may not sublicense it.
+
+4. LIMITATION — THE COMMERCIAL BOUNDARY
+
+   You may not provide the Software to third parties as a managed, hosted, or
+   time-shared service where the value you offer consists, in whole or in
+   substantial part, of the Software's own functionality.
+
+   This is the single commercial boundary. Running Runback to govern your own
+   agents is permitted, including where those agents serve your customers.
+   Operating Runback as a product for others is not.
+
+5. FURTHER RESTRICTIONS
+
+   (a) You may not circumvent, disable, or remove any licence-key check,
+       entitlement check, or feature gate, nor use the Software to obtain access
+       to Enterprise Features without a valid licence from the Licensor.
+   (b) You may not remove or alter any copyright, trademark, or licence notice.
+
+6. PATENTS
+
+   The Licensor grants you a worldwide, royalty-free, non-exclusive licence under
+   the patent claims it owns or controls that are necessarily infringed by the
+   Software, to make, use, and distribute the Software as permitted above.
+
+   This patent licence terminates automatically if you commence patent litigation
+   (including a cross-claim or counterclaim) alleging that the Software infringes
+   a patent.
+
+7. TRADEMARKS
+
+   This licence grants no rights in the "Runback" name, logo, or other marks. You
+   may state factually that your product uses or is built on Runback. You may not
+   name a fork or derivative "Runback", or imply the Licensor endorses it.
+
+8. CONTRIBUTIONS
+
+   Contributions are welcome. By submitting a contribution you:
+
+   (a) grant the Licensor a perpetual, worldwide, royalty-free, irrevocable,
+       sublicensable, transferable licence to use, reproduce, modify, distribute,
+       and otherwise exploit your contribution, under this licence, under the
+       Runback Commercial Licence, or under any other terms — including as part
+       of the Enterprise Features;
+   (b) grant the Licensor a patent licence on the same terms as Section 6; and
+   (c) confirm you have the right to grant (a) and (b), and that the contribution
+       is your original work or you are otherwise entitled to submit it.
+
+   You retain ownership of your contribution. The Licensor is under no obligation
+   to use it. See CONTRIBUTING.md if present.
+
+9. TERMINATION
+
+   This licence terminates automatically if you breach it and do not cure the
+   breach within 30 days after written notice from the Licensor. On termination
+   you must stop using and distributing the Software; rights properly granted to
+   downstream recipients before termination survive, provided they remain in
+   compliance.
+
+   If you cure the breach and the Licensor has not previously notified you of a
+   breach, your licence is reinstated.
+
+   Sections 1, 7, 10, 11, 12 and 13 survive termination.
+
+10. NO WARRANTY
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT.
+
+11. LIMITATION OF LIABILITY
+
+   TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE LICENSOR WILL NOT BE LIABLE FOR
+   ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR EXEMPLARY DAMAGES, OR FOR
+   ANY LOSS OF PROFITS, REVENUE, DATA, OR BUSINESS OPPORTUNITY, ARISING OUT OF OR
+   RELATING TO THIS LICENCE OR THE SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY.
+
+   Because the Software is supplied free of charge under this licence, the
+   Licensor's aggregate liability under it is limited to AUD $100.
+
+   This cap governs THIS LICENCE — your right to use the software. If you also
+   use Runback's managed cloud service, that is a separate relationship under
+   the Terms of Service, which carries its own limit. The two figures differ
+   because they cover different things, not because either supersedes the
+   other; Section 13(a) governs precedence where an agreement genuinely
+   conflicts.
+
+   Nothing in this licence excludes, restricts or modifies any guarantee, right
+   or remedy that cannot lawfully be excluded, restricted or modified, including
+   under the Australian Consumer Law. Where liability for a failure to comply
+   with a consumer guarantee may be limited, it is limited, at the Licensor's
+   election, to re-supplying the Software or paying the cost of re-supply.
+
+12. GOVERNING LAW
+
+   This licence is governed by the laws of the State of Victoria, Australia, and
+   the parties submit to the exclusive jurisdiction of its courts.
+
+13. GENERAL
+
+   (a) Precedence. If you have a separate written agreement with the Licensor
+       covering the Software, that agreement prevails over this licence to the
+       extent of any inconsistency.
+   (b) Versions. Version 1.0 continues to govern any deployment licensed under
+       it until you obtain the Software under this version. Obtaining the
+       Software under this version constitutes acceptance of it for that copy.
+       Version 1.0 is preserved verbatim in LICENSE-COMMUNITY-v1.0.txt, so
+       terms this clause reserves can actually be read.
+   (c) Severability. If a provision is held unenforceable, it is modified to the
+       minimum extent necessary to make it enforceable, or severed, and the rest
+       remains in effect.
+   (d) No waiver. A failure to enforce a provision is not a waiver of it.
+   (e) Assignment. You may not assign this licence without the Licensor's written
+       consent. The Licensor may assign it in connection with a merger,
+       acquisition, or sale of assets.
+   (f) Reservation. All rights not expressly granted are reserved.
