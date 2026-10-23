@@ -37,8 +37,10 @@ run.Tool(runback.ToolInput{ToolName: "issue_refund", ToolCallID: "t1", Input: in
 run.Finish(runback.FinishInput{Output: "Refund processed.", Status: "success"})
 ```
 
-Set `RUNBACK_INGEST_URL` and `RUNBACK_API_KEY` (or pass `Options.IngestURL`/`Options.APIKey`
-explicitly).
+Set `RUNBACK_API_KEY` (or pass `Options.APIKey`). A runback.dev key (`rb_cloud_…`)
+sends to runback.dev with nothing else set. Any other key defaults to
+`http://localhost:3000`, so a self-hosted deployment sets `RUNBACK_INGEST_URL`
+(or `Options.IngestURL`) to its own origin.
 
 ## Redaction
 

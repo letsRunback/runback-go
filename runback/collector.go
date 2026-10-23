@@ -1,12 +1,10 @@
-// Package runback is the Go SDK for Runback — Phase 1: event capture and
-// ingest only. Mirrors packages/sdk/src/core.ts's framework-agnostic
+// Package runback is the Go SDK for Runback: event capture, client-side
+// redaction (on by default) and the capture-time cassette digest. Mirrors packages/sdk/src/core.ts's framework-agnostic
 // startRun() (not the Vercel AI SDK auto-instrumentation, which has no Go
 // equivalent): call Run methods by hand at the point in your own agent loop
 // where a model or tool call happens.
 //
-// No client-side redaction, no cassette hash-chaining in this phase — see
-// events.go's package comment for why, and use the OTel ingest path if you
-// need redaction today.
+// Step replay and bisection are not ported; see events.go's package comment.
 package runback
 
 import (
@@ -261,6 +259,18 @@ func (r *Run) push(event any) {
 
 // LLM records a completed (or failed) model call.
 func (r *Run) LLM(in LlmInput) {
+	// The wire schema requires arrays here. A nil slice marshals as null,
+	// and /api/ingest refuses the WHOLE batch (422) on one null, so a text
+	// turn left at the zero value lost the entire run.
+	if in.Request.Messages == nil {
+		in.Request.Messages = []ModelMessage{}
+	}
+	if in.Request.Tools == nil {
+		in.Request.Tools = []ToolDefinition{}
+	}
+	if in.Response.ToolCalls == nil {
+		in.Response.ToolCalls = []ToolCall{}
+	}
 	r.push(LlmEvent{
 		baseEvent: r.newBase(newULID(), &r.rootSpanID),
 		Type:      "llm",

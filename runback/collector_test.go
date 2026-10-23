@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"os"
+	"strings"
 	"testing"
 )
 
@@ -40,6 +41,31 @@ func TestRunSendsExpectedEvents(t *testing.T) {
 	}
 	if result.Sent != 5 {
 		t.Fatalf("expected 5 events sent (run-start, llm, tool, reasoning, run-end), got %d", result.Sent)
+	}
+}
+
+// TestZeroValueSlicesAreSentAsArrays: the README's own call shape (no tools,
+// no tool calls) must produce arrays, not null. The ingest schema requires
+// arrays and refuses the whole batch on a null, which
+// TestEventsConformToIngestSchema cannot see: it checks field presence only.
+func TestZeroValueSlicesAreSentAsArrays(t *testing.T) {
+	run := NewRun(Options{RunName: "readme-shape", APIKey: "k"})
+	run.LLM(LlmInput{
+		Model:    Model{Provider: "openai", ModelID: "gpt-4o"},
+		Response: LlmResponse{Text: Ptr("Refund processed."), FinishReason: Ptr("stop")},
+	})
+	b, err := json.Marshal(run.buffer[1])
+	if err != nil {
+		t.Fatal(err)
+	}
+	s := string(b)
+	for _, want := range []string{`"messages":[]`, `"tools":[]`, `"tool_calls":[]`} {
+		if !strings.Contains(s, want) {
+			t.Errorf("llm event lacks %s: %s", want, s)
+		}
+	}
+	if strings.Contains(s, `"messages":null`) || strings.Contains(s, `"tool_calls":null`) || strings.Contains(s, `"tools":null`) {
+		t.Errorf("llm event carries a null array: %s", s)
 	}
 }
 
